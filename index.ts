@@ -3,7 +3,7 @@ import { Collection, MongoClient } from 'mongodb';
 
 const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true });
 const app = express();
-const port = 80;
+const port = 3000;
 const hostname = '84.201.140.23';
 
 app.use(express.static('front/natvorim-crm'));
