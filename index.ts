@@ -23,7 +23,7 @@ app.use(express.json());
 //     app.locals.people = peopleCollection;
 // 	app.locals.orders = ordersCollection;
 
-    app.listen(port, function(){
+    app.listen(port, hostname, function(){
 		console.log(`Сервер ожидает подключения на порту ${port}`);
 	});
 
