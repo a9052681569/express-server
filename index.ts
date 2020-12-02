@@ -3,7 +3,7 @@ import { Collection, MongoClient } from 'mongodb';
 
 const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true });
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 const hostname = '84.201.140.23';
 
 app.use(express.static('front/natvorim-crm'));
@@ -23,7 +23,7 @@ app.use(express.json());
 //     app.locals.people = peopleCollection;
 // 	app.locals.orders = ordersCollection;
 
-    app.listen(Number(port), hostname, function(){
+    app.listen(Number(port), function(){
 		console.log(`Сервер ожидает подключения на порту ${port}`);
 	});
 
