@@ -1,10 +1,18 @@
 import express = require("express");
 import { Collection, MongoClient } from 'mongodb';
+import { Person } from "./models/person";
+import {MONGO_OPTIONS} from './mongo/config/options'
+import { MONGO_URL } from "./mongo/config/url";
 
 const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true });
 const app = express();
-const port = process.env.PORT || 3000;
-const hostname = '84.201.140.23';
+const port = 3000;
+
+MongoClient.connect(MONGO_URL, MONGO_OPTIONS, function(err, db) {
+	const dbo = db.db("ntv-db");
+	// ... dbo.collection(...).find(...)
+	console.log('подключились к бд')
+});
 
 app.use(express.static('front/natvorim-crm'));
 app.use(express.json());
@@ -23,7 +31,7 @@ app.use(express.json());
 //     app.locals.people = peopleCollection;
 // 	app.locals.orders = ordersCollection;
 
-    app.listen(port, hostname, function(){
+    app.listen(port, function(){
 		console.log(`Сервер ожидает подключения на порту ${port}`);
 	});
 
@@ -69,46 +77,3 @@ app.post('/orders/by/personid', (req, res) => {
 //     dbClient.close();
 //     process.exit();
 // });
-
-
-/**
- * объект с информацией о клиенте
- */
-export interface Person {
-	/**
-	 * уникальный идентификатор клиента
-	 */
-	id: number;
-	/**
-	 * ФИО клиента
-	 */
-	name: string;
-	/**
-	 * контакты клиента
-	 */
-	contacts: PersonContacts;
-	/**
-	 * адрес доставки клиенту
-	 */
-	address: PersonAddress;
-}
-
-export interface PersonContacts {
-	/**
-	 * электронная почта клиента
-	 */
-	email?: string;
-	/**
-	 * номер телефона
-	 */
-	phone?: string;
-	/**
-	 * аккаунт инстаграмм
-	 */
-	inst?: string;
-}
-
-export interface PersonAddress {
-	city: string;
-	address: string;
-}
