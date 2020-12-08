@@ -8,7 +8,8 @@
     "start": "pm2 start -i max index.ts",
 	"stop": "pm2 stop all",
 	"delete": "pm2 delete all",
-	"check": "pm2 ls"
+	"check": "pm2 ls",
+	"set": "ts-node set-orders-and-people.ts"
   },
   "author": "aasereb6 <aasereb6@mts.ru> (https://github.com/a9052681569)",
   "license": "MIT",

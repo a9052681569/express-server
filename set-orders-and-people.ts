@@ -4,7 +4,6 @@ import { Person } from "./models/person";
 import {MONGO_OPTIONS} from './mongo/config/options'
 import { MONGO_URL } from "./mongo/config/url";
 import { readFileSync } from "fs";
-import { Paging } from "./models/paging";
 
 const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true });
 const app = express();
@@ -27,6 +26,23 @@ MongoClient.connect(MONGO_URL, MONGO_OPTIONS, function (err, client) {
 	const peopleCollection = db.collection("people")
 	const ordersCollection = db.collection("orders");
 
+	peopleCollection.insertMany(peopleArr, function (err, results) {     
+		if (err) {
+			console.log('ошибка в добавлении людей')
+			return
+		}
+        console.log('добавили людей');
+	});
+	
+	ordersCollection.insertMany(ordersArr, function (err, results) {     
+		if (err) {
+			console.log('ошибка в добавлении заказов')
+			return
+		}
+        console.log('добавили заказы');
+    });
+
+
     app.locals.people = peopleCollection;
 	app.locals.orders = ordersCollection;
 
@@ -47,12 +63,12 @@ app.post('/people/paging', (req, res) => {
 
 	const people: Collection<Person> = req.app.locals.people;
 
-	const paging: Paging = req.body;
+	const paging = req.body;
 
-	people.find({}, {min: paging.start, max: paging.end}).toArray((err, customers: Person[]) => {
+	people.find().toArray((err, people: Person[]) => {
 		if (err) return console.log(err);
 		
-		res.send(customers);
+		res.send(people.slice(paging.start, paging.end));
 
 	});
 });
