@@ -52,6 +52,7 @@ app.post('/people/paging', (req, res) => {
 	people.find({}, {min: paging.start, max: paging.end}).toArray((err, customers: Person[]) => {
 		if (err) return console.log(err);
 		
+		console.log(customers);
 		res.send(customers);
 
 	});
