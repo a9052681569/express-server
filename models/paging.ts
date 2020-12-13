@@ -1,4 +1,4 @@
 export interface Paging {
 	start: number;
-	end: number;
+	limit: number;
 }

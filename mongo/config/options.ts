@@ -1,10 +1,11 @@
-const fs = require('fs');
-
 export const MONGO_OPTIONS = {
 	useNewUrlParser: true,
-	useUnifiedTopology: true,
-    replSet: {
-        sslCA: fs.readFileSync(
-        '/usr/local/share/ca-certificates/Yandex/YandexInternalRootCA.crt')
-    }
+	useUnifiedTopology: true
+}
+
+export const BACKUP_OPTIONS = {
+	autoBackup: true,
+	removeOldBackup: true,
+	delayDays: 3,
+	backupPath: '/dbbackup'
 }
