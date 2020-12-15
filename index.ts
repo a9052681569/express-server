@@ -5,15 +5,18 @@ import { Person } from "./models/person";
 import {MONGO_OPTIONS} from './mongo/config/options'
 import { MONGO_URL } from "./mongo/config/url";
 import { appRouter } from "./router/router";
+import { createServer } from "http";
+var http = require('http');
 
 const mongoClient = new MongoClient(MONGO_URL, MONGO_OPTIONS);
 const app = express();
 const port = 3000;
+const host = '84.201.179.234';
 
 app.use(express.static('front/natvorim-crm'));
 app.use(express.json());
-app.use(appRouter)
-app.set('trust proxy', '84.201.179.234');
+app.use(appRouter);
+// app.set('trust proxy', host);
 
 mongoClient.connect().then((client: MongoClient) => {
 
@@ -24,7 +27,7 @@ mongoClient.connect().then((client: MongoClient) => {
 	app.locals.people = peopleCollection;
 	app.locals.orders = ordersCollection;
 
-	app.listen(port, function () {
+	createServer(app).listen(port, host, function () {
 		console.log(`Подключились к БД, сервер ожидает на порту ${port}`);
 	});
 
