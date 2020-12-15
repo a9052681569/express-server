@@ -5,8 +5,8 @@ import { Person } from "./models/person";
 import {MONGO_OPTIONS} from './mongo/config/options'
 import { MONGO_URL } from "./mongo/config/url";
 import { appRouter } from "./router/router";
-import compression from 'compression';
 import { createServer } from "http";
+const compression = require('compression');
 
 const mongoClient = new MongoClient(MONGO_URL, MONGO_OPTIONS);
 const app = express();
