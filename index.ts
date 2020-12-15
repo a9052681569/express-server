@@ -6,18 +6,17 @@ import {MONGO_OPTIONS} from './mongo/config/options'
 import { MONGO_URL } from "./mongo/config/url";
 import { appRouter } from "./router/router";
 import { createServer } from "http";
-const compression = require('compression');
+import * as compression from 'compression';
 
 const mongoClient = new MongoClient(MONGO_URL, MONGO_OPTIONS);
 const app = express();
 const port = 80;
 const host = '0.0.0.0';
 
+app.use(compression({level: 9}));
 app.use(express.static('front/natvorim-crm'));
 app.use(express.json());
 app.use(appRouter);
-app.use(compression({level: 9}));
-// app.set('trust proxy', host);
 
 mongoClient.connect().then((client: MongoClient) => {
 
