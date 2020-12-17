@@ -5,13 +5,12 @@ import { Person } from "./models/person";
 import {MONGO_OPTIONS} from './mongo/config/options'
 import { MONGO_URL } from "./mongo/config/url";
 import { appRouter } from "./router/router";
-import { createServer } from "http";
 import * as compression from 'compression';
 
 const mongoClient = new MongoClient(MONGO_URL, MONGO_OPTIONS);
 const app = express();
-const port = 80;
-const host = '0.0.0.0';
+const port = 3000;
+const host = 'localhost';
 
 app.use(compression({level: 9}));
 app.use(express.static('front/natvorim-crm'));
@@ -27,7 +26,7 @@ mongoClient.connect().then((client: MongoClient) => {
 	app.locals.people = peopleCollection;
 	app.locals.orders = ordersCollection;
 
-	createServer(app).listen(port, host, function () {
+	app.listen(port, host, function () {
 		console.log(`Подключились к БД, сервер ожидает на порту ${port}`);
 	});
 
