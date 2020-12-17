@@ -7,5 +7,5 @@ export const BACKUP_OPTIONS = {
 	autoBackup: true,
 	removeOldBackup: true,
 	delayDays: 3,
-	backupPath: '/dbbackup'
+	backupPath: '/home/aasereb6/dbbackup'
 }

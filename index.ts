@@ -5,7 +5,6 @@ import { Person } from "./models/person";
 import {MONGO_OPTIONS} from './mongo/config/options'
 import { MONGO_URL } from "./mongo/config/url";
 import { appRouter } from "./router/router";
-import { createServer } from "http";
 import * as compression from 'compression';
 
 const mongoClient = new MongoClient(MONGO_URL, MONGO_OPTIONS);
