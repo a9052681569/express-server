@@ -6,6 +6,7 @@ import {MONGO_OPTIONS} from './mongo/config/options'
 import { MONGO_URL } from "./mongo/config/url";
 import { appRouter } from "./router/router";
 import * as compression from 'compression';
+import { UserInCollection } from "./models/user";
 
 const mongoClient = new MongoClient(MONGO_URL, MONGO_OPTIONS);
 const app = express();
@@ -20,11 +21,13 @@ app.use(appRouter);
 mongoClient.connect().then((client: MongoClient) => {
 
 	const db = client.db("testdb");
-	const peopleCollection: Collection<Person[]> = db.collection("people")
-	const ordersCollection: Collection<Order[]> = db.collection("orders");
+	const peopleCollection: Collection<Person> = db.collection("people")
+	const ordersCollection: Collection<Order> = db.collection("orders");
+	const usersCollection: Collection<UserInCollection> = db.collection("users");
 
 	app.locals.people = peopleCollection;
 	app.locals.orders = ordersCollection;
+	app.locals.users = usersCollection;
 
 	app.listen(port, host, function () {
 		console.log(`Подключились к БД, сервер ожидает на порту ${port}`);

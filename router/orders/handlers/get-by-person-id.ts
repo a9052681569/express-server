@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import { Collection } from 'mongodb';
+import { Order } from '../../../models/order';
 
 export const ordersByPersonId = Router();
 	
 ordersByPersonId.post('/by/personid', (req, res) => {
-	const ordersCollection: Collection = req.app.locals.orders;
+	const ordersCollection: Collection<Order> = req.app.locals.orders;
 
-	const personId: number = req.body.personId;
+	const personId: string = req.body.personId;
 
 	ordersCollection.find({ personId }).toArray((err, orders) => {
 		if (err) return console.log(err);

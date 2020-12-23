@@ -9,7 +9,7 @@ customerAutocomplete.post('/autocomplete', (req, res) => {
 
 	const people: Collection<Person> = req.app.locals.people;
 
-	const { name } = req.body;
+	const { name }: {name: string} = req.body;
 
 	people.find({name: { $regex: name, $options: 'i' }}, {limit: 5}).toArray((err, customers: Person[]) => {
 		if (err) return console.log(err);

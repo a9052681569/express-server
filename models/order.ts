@@ -9,12 +9,12 @@ export interface Order {
 	/**
 	 * идентификатор заказа
 	 */
-	id: number;
+	id: string;
 	_id: any;
 	/**
 	 * id клиентa, которому будет доставлен заказ
 	 */
-	personId: number;
+	personId: string;
 	/**
 	 * тип отправки (почта, курьер, сдек и т.д)
 	 */

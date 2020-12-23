@@ -10,11 +10,13 @@ patchCustomer.post('/patch', (req, res) => {
 
 	const customer: Person = req.body;
 
-	const _id = new ObjectID(customer._id);
-
-	people.findOneAndUpdate({_id}, {$set: {...customer, _id}})
-		.then(() => {
-			res.send(customer);
+	people.findOneAndUpdate({id: customer.id}, {$set: {...customer}}, {returnOriginal: false})
+		.then((c) => {
+			if (c.value) {
+				res.send(c.value);
+			} else {
+				res.sendStatus(504);
+			}
 		})
 		.catch(err => {
 			console.error(err)

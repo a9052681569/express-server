@@ -5,7 +5,7 @@ export interface Person {
 	/**
 	 * уникальный идентификатор клиента
 	 */
-	id: number;
+	id: string;
 	_id: any;
 	/**
 	 * ФИО клиента

@@ -9,9 +9,9 @@ getCustomers.post('/get', (req, res) => {
 
 	const people: Collection<Person> = req.app.locals.people;
 
-	const paging: Paging = req.body;
+	const { name }: {name: string} = req.body;
 
-	people.find({}, {skip: paging.start, limit: paging.limit}).toArray((err, customers: Person[]) => {
+	people.find({name: { $regex: name, $options: 'i' }}, {limit: 30}).toArray((err, customers: Person[]) => {
 		if (err) return console.log(err);
 		
 		res.send(customers);
