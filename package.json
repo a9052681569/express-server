@@ -10,8 +10,8 @@
     "delete": "pm2 delete all",
     "check": "pm2 ls",
     "set": "ts-node set-orders-and-people.ts",
-    "backup": "ts-node ./mongo/scripts/make-backup.ts",
-    "restore": "ts-node ./mongo/scripts/restore-db.ts",
+    "mongo:backup": "ts-node ./mongo/scripts/make-backup.ts",
+    "mongo:restore": "ts-node ./mongo/scripts/restore-db.ts",
     "reload": "sudo systemctl reload nginx && pm2 reload all"
   },
   "author": "aasereb6 <aasereb6@mts.ru> (https://github.com/a9052681569)",

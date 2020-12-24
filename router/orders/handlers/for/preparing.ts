@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { Collection, ObjectID } from 'mongodb';
+import { Collection } from 'mongodb';
 import { Order } from '../../../../models/order';
 import { Person } from '../../../../models/person';
 import { ShipmentFilterData, ShipmentPreparingOrder } from '../../../../models/shipment';

@@ -7,6 +7,7 @@ import { MONGO_URL } from "./mongo/config/url";
 import { appRouter } from "./router/router";
 import * as compression from 'compression';
 import { UserInCollection } from "./models/user";
+import { readFileSync } from "fs";
 
 const mongoClient = new MongoClient(MONGO_URL, MONGO_OPTIONS);
 const app = express();
@@ -18,12 +19,24 @@ app.use(express.static('front/natvorim-crm'));
 app.use(express.json());
 app.use(appRouter);
 
+const ordersFile = readFileSync('./orders2021.json', 'utf8');
+const peopleFile = readFileSync('./people2021.json', 'utf8');
+
+const people: Person[] = JSON.parse(peopleFile);
+const orders: Order[] = JSON.parse(ordersFile);
+
 mongoClient.connect().then((client: MongoClient) => {
 
 	const db = client.db("testdb");
 	const peopleCollection: Collection<Person> = db.collection("people")
 	const ordersCollection: Collection<Order> = db.collection("orders");
 	const usersCollection: Collection<UserInCollection> = db.collection("users");
+
+	peopleCollection.drop();
+	ordersCollection.drop();
+
+	peopleCollection.insertMany(people);
+	ordersCollection.insertMany(orders);
 
 	app.locals.people = peopleCollection;
 	app.locals.orders = ordersCollection;

@@ -32,7 +32,7 @@ export const initMonths = (): void => {
 		}
 		MONTHS.push({
 			name: `${MONTH_NAMES[month]} ${year}`,
-			date: `${month + 1}.01.${year}`
+			date: `${month + 1 > 9 ? month + 1 : '0' + (month + 1)}.01.${year}`
 		});
 
 		month++;

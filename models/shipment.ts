@@ -1,7 +1,5 @@
 import { ShipmentTypes, OrderAges } from "./enums/order/order-enums";
-import { Month } from "./enums/months/months";
 import { PersonAddress } from "./person";
-import { ObjectID } from "mongodb";
 
 export interface ShipmentFilterData {
 	shipmentDate: string;
