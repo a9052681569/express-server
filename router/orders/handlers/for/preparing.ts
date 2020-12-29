@@ -65,19 +65,22 @@ ordersForPrepairing.post('/for/prepaire', (req, res) => {
 
 		peopleCollection.find({ id: { $in: personIds } }).toArray((err, customers) => {
 			if (err) return console.log(err);
-
-			const result: ShipmentPreparingOrder[] = orders.map((o) => {
+			const result: ShipmentPreparingOrder[] = orders.reduce((aсс: ShipmentPreparingOrder[], o: Order) => {
 				const person: Person = customers.find(p => p.id === o.personId);
 
-				return {
-					id: o.id,
-					name: person.name,
-					address: person.address,
-					phone: person.contacts?.phone,
-					trackNumber: o.trackNumber,
-					sended: o.sended
+				if (person) {
+					aсс.push({
+						id: o.id,
+						name: person.name,
+						address: person.address,
+						phone: person.contacts?.phone,
+						trackNumber: o.trackNumber,
+						sended: o.sended
+					})
 				}
-			})
+
+				return aсс;
+			}, [])
 
 			res.send(result);
 		})
