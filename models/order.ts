@@ -8,7 +8,6 @@ export interface Order {
 	 * идентификатор заказа
 	 */
 	id: string;
-	_id: any;
 	/**
 	 * id клиентa, которому будет доставлен заказ
 	 */

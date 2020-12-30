@@ -11,7 +11,7 @@ getCustomers.post('/get', (req, res) => {
 
 	const { name }: {name: string} = req.body;
 
-	people.find({name: { $regex: name, $options: 'i' }}, {limit: 30}).toArray((err, customers: Person[]) => {
+	people.find({name: { $regex: name, $options: 'i' }}, {limit: 30, projection: {_id: 0}}).toArray((err, customers: Person[]) => {
 		if (err) return console.log(err);
 		
 		res.send(customers);

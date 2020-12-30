@@ -9,7 +9,7 @@ ordersByPersonId.post('/by/personid', (req, res) => {
 
 	const personId: string = req.body.personId;
 
-	ordersCollection.find({ personId }).toArray((err, orders) => {
+	ordersCollection.find({ personId }, {projection: {_id: 0}}).toArray((err, orders) => {
 		if (err) return console.log(err);
 		
 		res.send(orders);
