@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { Collection, ObjectID } from 'mongodb';
+import { Collection } from 'mongodb';
 import { Person } from '../../../models/person';
 
 export const patchCustomer = Router();
