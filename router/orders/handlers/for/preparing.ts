@@ -41,6 +41,13 @@ ordersForPrepairing.post('/for/prepaire', (req, res) => {
 			]
 		}
 
+	} else if (filterData.ordersType === 'театры') {
+		credentials = {
+			shipmentType: filterData.shipmentType,
+			shipmentDate: filterData.shipmentDate,
+			'orderStructure.kits': { $size: 0 },
+			'orderStructure.theatres.0': {$exists : true}
+		}
 	} else {
 		credentials = {
 			shipmentType: filterData.shipmentType,
@@ -54,12 +61,13 @@ ordersForPrepairing.post('/for/prepaire', (req, res) => {
 			},
 			'orderStructure.theatres': { $size: 0 },
 			comment: ''
-			
 		}
 	}
 
 	ordersCollection.find(credentials).toArray((err, orders) => {
 		if (err) return console.log(err);
+
+		console.log(orders);
 
 		const personIds = orders.map(o => o.personId);
 

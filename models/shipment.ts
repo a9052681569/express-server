@@ -4,7 +4,7 @@ import { PersonAddress } from "./person";
 export interface ShipmentFilterData {
 	shipmentDate: string;
 	shipmentType: ShipmentTypes;
-	ordersType: OrderAges | 'сложный';
+	ordersType: OrderAges | 'сложный' | 'театры';
 }
 
 export interface ShipmentPreparingOrder {
