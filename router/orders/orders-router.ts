@@ -5,6 +5,7 @@ import { patchOrder } from "./handlers/patch/patch";
 import { patchOrderSended } from "./handlers/patch/sended";
 import { patchOrderTrack } from "./handlers/patch/track";
 import { postOrder } from "./handlers/post";
+import { removeOrder } from "./handlers/remove";
 
 const handlers: RequestHandler[] = [
 	ordersByPersonId,
@@ -12,7 +13,8 @@ const handlers: RequestHandler[] = [
 	patchOrder,
 	ordersForPrepairing,
 	patchOrderSended,
-	patchOrderTrack
+	patchOrderTrack,
+	removeOrder
 ]
 
 export const ordersRouter = Router().use('/orders', ...handlers);
