@@ -26,7 +26,8 @@ ordersForPrepairing.post('/for/prepaire', (req, res) => {
 				{
 					shipmentType: filterData.shipmentType,
 					shipmentDate: filterData.shipmentDate,
-					'orderStructure.theatres.0': {$exists : true}
+					'orderStructure.theatres.0': {$exists : true},
+					'orderStructure.kits.0': {$exists : true},
 				},
 				{
 					shipmentType: filterData.shipmentType,
