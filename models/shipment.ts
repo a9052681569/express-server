@@ -3,8 +3,9 @@ import { PersonAddress } from "./person";
 
 export interface ShipmentFilterData {
 	shipmentDate: string;
-	shipmentType: ShipmentTypes;
-	ordersType: OrderAges | 'сложный' | 'театры';
+	shipmentType: ShipmentPreparingShipmentTypes;
+	ordersType: ShipmentPreparingOrderTypes;
+	noTrack: boolean;
 }
 
 export interface ShipmentPreparingOrder {
@@ -14,4 +15,15 @@ export interface ShipmentPreparingOrder {
 	phone: string;
 	trackNumber: string;
 	sended: boolean;
+}
+
+export type ShipmentPreparingOrderTypes = OrderAges | 'сложный' | 'театры' | 'все';
+
+export type ShipmentPreparingShipmentTypes = ShipmentTypes | 'все';
+
+
+export interface BaseCredStructure {
+	shipmentDate: string;
+	shipmentType?: ShipmentPreparingShipmentTypes;
+	trackNumber?: string;
 }

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { Collection } from 'mongodb';
 import { Order } from '../../../../models/order';
 import { Person } from '../../../../models/person';
-import { ShipmentFilterData, ShipmentPreparingOrder } from '../../../../models/shipment';
+import { BaseCredStructure, ShipmentFilterData, ShipmentPreparingOrder } from '../../../../models/shipment';
 
 
 export const ordersForPrepairing = Router();
@@ -15,28 +15,49 @@ ordersForPrepairing.post('/for/prepaire', (req, res) => {
 
 	let credentials;
 
-	if (filterData.ordersType === 'сложный') {
+	let baseCredStructure: BaseCredStructure;
+
+	if (filterData.noTrack) {
+		baseCredStructure = {
+			shipmentType: filterData.shipmentType,
+			shipmentDate: filterData.shipmentDate,
+			trackNumber: ''
+		}
+	} else {
+		baseCredStructure = {
+			shipmentType: filterData.shipmentType,
+			shipmentDate: filterData.shipmentDate
+		}
+	}
+
+	if (filterData.shipmentType === 'все') {
+		
+		delete baseCredStructure.shipmentType;
+	}
+
+
+	if (filterData.ordersType === 'все') {
+
+		credentials = baseCredStructure;
+
+	} else if (filterData.ordersType === 'сложный') {
 		credentials = {
 			$or: [
 				{
-					shipmentType: filterData.shipmentType,
-					shipmentDate: filterData.shipmentDate,
+					...baseCredStructure,
 					comment: {$ne: ''}
 				},
 				{
-					shipmentType: filterData.shipmentType,
-					shipmentDate: filterData.shipmentDate,
+					...baseCredStructure,
 					'orderStructure.theatres.0': {$exists : true},
 					'orderStructure.kits.0': {$exists : true},
 				},
 				{
-					shipmentType: filterData.shipmentType,
-					shipmentDate: filterData.shipmentDate,
+					...baseCredStructure,
 					'orderStructure.kits.1': {$exists : true}
 				},
 				{
-					shipmentType: filterData.shipmentType,
-					shipmentDate: filterData.shipmentDate,
+					...baseCredStructure,
 					'orderStructure.kits.0.count': { $gt: 1 }
 				},
 			]
@@ -44,15 +65,13 @@ ordersForPrepairing.post('/for/prepaire', (req, res) => {
 
 	} else if (filterData.ordersType === 'театры') {
 		credentials = {
-			shipmentType: filterData.shipmentType,
-			shipmentDate: filterData.shipmentDate,
+			...baseCredStructure,
 			'orderStructure.kits': { $size: 0 },
 			'orderStructure.theatres.0': {$exists : true}
 		}
 	} else {
 		credentials = {
-			shipmentType: filterData.shipmentType,
-			shipmentDate: filterData.shipmentDate,
+			...baseCredStructure,
 			'orderStructure.kits': {
 				$size: 1,
 				$elemMatch: {
