@@ -80,14 +80,12 @@ ordersForPrepairing.post('/for/prepaire', (req, res) => {
 				}
 			},
 			'orderStructure.theatres': { $size: 0 },
-			comment: ''
+			comment: {$in: ['', null]}
 		}
 	}
 
 	ordersCollection.find(credentials).toArray((err, orders) => {
 		if (err) return console.log(err);
-
-		console.log(orders);
 
 		const personIds = orders.map(o => o.personId);
 
