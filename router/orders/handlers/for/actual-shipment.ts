@@ -18,12 +18,17 @@ ordersForActualShipment.post('/for/actual-shipment', (req, res) => {
 	const credentials: {
 		shipmentDate: string;
 		shipmentType?: ShipmentTypes;
+		sended?: boolean;
 	} = { 
-		shipmentDate: filterData.shipmentDate	
+		shipmentDate: filterData.shipmentDate,
 	};
 	
 	if (filterData.shipmentType !== 'все') {
-		credentials.shipmentType = filterData.shipmentType
+		credentials.shipmentType = filterData.shipmentType;
+	}
+
+	if (filterData.notSended) {
+		credentials.sended = false;
 	}
 
 	

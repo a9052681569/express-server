@@ -24,4 +24,5 @@ export interface ActualShipmentOrder {
 export interface ASFilterFormData {
 	shipmentDate: string;
 	shipmentType: ShipmentTypes | 'все';
+	notSended: boolean;
 }
