@@ -21,7 +21,7 @@ ordersForPrepairing.post('/for/prepaire', (req, res) => {
 		baseCredStructure = {
 			shipmentType: filterData.shipmentType,
 			shipmentDate: filterData.shipmentDate,
-			trackNumber: ''
+			trackNumber: {$in: ['', null]}
 		}
 	} else {
 		baseCredStructure = {
@@ -40,12 +40,12 @@ ordersForPrepairing.post('/for/prepaire', (req, res) => {
 
 		credentials = baseCredStructure;
 
-	} else if (filterData.ordersType === 'сложный') {
+	} else if (filterData.ordersType === 'сложные') {
 		credentials = {
 			$or: [
 				{
 					...baseCredStructure,
-					comment: {$ne: ''}
+					comment: {$nin: ['', null]}
 				},
 				{
 					...baseCredStructure,

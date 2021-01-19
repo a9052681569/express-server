@@ -17,7 +17,7 @@ export interface ShipmentPreparingOrder {
 	sended: boolean;
 }
 
-export type ShipmentPreparingOrderTypes = OrderAges | 'сложный' | 'театры' | 'все';
+export type ShipmentPreparingOrderTypes = OrderAges | 'сложные' | 'театры' | 'все';
 
 export type ShipmentPreparingShipmentTypes = ShipmentTypes | 'все';
 
@@ -25,5 +25,5 @@ export type ShipmentPreparingShipmentTypes = ShipmentTypes | 'все';
 export interface BaseCredStructure {
 	shipmentDate: string;
 	shipmentType?: ShipmentPreparingShipmentTypes;
-	trackNumber?: string;
+	trackNumber?: any;
 }

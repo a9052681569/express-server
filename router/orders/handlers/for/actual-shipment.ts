@@ -18,7 +18,7 @@ ordersForActualShipment.post('/for/actual-shipment', (req, res) => {
 	const credentials: {
 		shipmentDate: string;
 		shipmentType?: ShipmentTypes;
-		sended?: boolean;
+		sended?: any;
 	} = { 
 		shipmentDate: filterData.shipmentDate,
 	};
@@ -28,26 +28,28 @@ ordersForActualShipment.post('/for/actual-shipment', (req, res) => {
 	}
 
 	if (filterData.notSended) {
-		credentials.sended = false;
+		credentials.sended = {$in: [false, null]};
 	}
 
-	
+	console.log(credentials);
 
 	ordersCollection.find(credentials).toArray((err, orders) => {
 		if (err) return console.log(err);
 
 		const personIds = orders.map(o => o.personId);
 
+		console.log(orders.length);
+
 		peopleCollection.find({ id: { $in: personIds } }).toArray((err, customers) => {
 			if (err) return console.log(err);
-			const result: ASShipmentTypeState[] = orders.reduce((acc: ASShipmentTypeState[], o: Order) => {
-				const person: Person = customers.find(p => p.id === o.personId);
+			const result: ASShipmentTypeState[] = orders.reduce((acc: ASShipmentTypeState[], order: Order) => {
+				const person: Person = customers.find(p => p.id === order.personId);
 
 				if (person) {
 
-					const currentOrder: ActualShipmentOrder = getActualShipmentOrder(o, person);
-					const currentShipmentTypeState = acc.find(s => s.shipmentType === o.shipmentType);
-					const currentOrderType = getCurrentOrderType(o);
+					const currentOrder: ActualShipmentOrder = getActualShipmentOrder(order, person);
+					const currentShipmentTypeState = acc.find(s => s.shipmentType === order.shipmentType);
+					const currentOrderType = getCurrentOrderType(order);
 
 					if (currentShipmentTypeState) {
 
@@ -67,7 +69,7 @@ ordersForActualShipment.post('/for/actual-shipment', (req, res) => {
 
 					} else {
 						acc.push({
-							shipmentType: o.shipmentType,
+							shipmentType: order.shipmentType,
 							ordersByType: [{
 								ordersType: currentOrderType,
 								orders: [currentOrder]
