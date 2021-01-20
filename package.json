@@ -10,6 +10,7 @@
     "delete": "pm2 delete all",
     "check": "pm2 ls",
     "set": "ts-node set-orders-and-people.ts",
+    "convert:phones": "ts-node convert-all-phones.ts",
     "mongo:backup": "ts-node ./mongo/scripts/make-backup.ts",
     "mongo:restore": "ts-node ./mongo/scripts/restore-db.ts",
     "reload": "sudo systemctl reload nginx && pm2 reload all"

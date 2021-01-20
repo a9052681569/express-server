@@ -42,7 +42,18 @@ customerSearch.post('/search', (req, res) => {
 		if (customers.length) {
 			res.send(customers);
 		} else {
-			ordersCollection.find({ comment: { $regex: query, $options: 'i' } }).toArray((err, orders: Order[]) => {
+			const orderCred = {
+				$or: [
+					{
+						comment: { $regex: query, $options: 'i' }
+					},
+					{
+						trackNumber: { $regex: query, $options: 'i' },
+					}
+				]
+			}
+
+			ordersCollection.find(orderCred).toArray((err, orders: Order[]) => {
 				if (err) return console.log(err);
 
 				const personIds = orders.map(o => o.personId)
