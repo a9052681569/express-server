@@ -28,7 +28,8 @@ postOrder.post('/post', (req, res) => {
 			const reminder: Reminder = {
 				date: lastOrder.shipmentDate,
 				sended: false,
-				didNewOrder: false
+				didNewOrder: false,
+				orderType: lastOrder.type
 			}
 
 			const newReminders = customer.reminders;

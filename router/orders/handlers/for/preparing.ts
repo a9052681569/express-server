@@ -67,7 +67,8 @@ ordersForPrepairing.post('/for/prepaire', (req, res) => {
 		credentials = {
 			...baseCredStructure,
 			'orderStructure.kits': { $size: 0 },
-			'orderStructure.theatres.0': {$exists : true}
+			'orderStructure.theatres.0': { $exists: true },
+			comment: {$in: ['', null]}
 		}
 	} else {
 		credentials = {

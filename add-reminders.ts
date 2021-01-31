@@ -29,7 +29,8 @@ mongoClient.connect().then((client: MongoClient) => {
 					const reminder: Reminder = {
 						date: lastOrder.shipmentDate,
 						sended: false,
-						didNewOrder: false
+						didNewOrder: false,
+						orderType: lastOrder.type
 					}
 	
 					peopleCollection.findOneAndUpdate({ id: p.id }, { $set: { reminders: [reminder] } }, {returnOriginal: false})
@@ -42,7 +43,8 @@ mongoClient.connect().then((client: MongoClient) => {
 					const reminder: Reminder = {
 						date: orders[0].shipmentDate,
 						sended: false,
-						didNewOrder: false
+						didNewOrder: false,
+						orderType: orders[0].type
 					}
 					peopleCollection.findOneAndUpdate({ id: p.id }, { $set: { reminders: [reminder] } }, {returnOriginal: false})
 						.then(e => {
