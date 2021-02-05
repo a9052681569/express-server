@@ -10,7 +10,9 @@ customerAutocomplete.post('/autocomplete', (req, res) => {
 
 	const { name }: { name: string } = req.body;
 
-	people.find({name: { $regex: name, $options: 'i' }}, {limit: 5, projection: {_id: 0}}).toArray((err, customers: Person[]) => {
+	const regex = name || ''
+
+	people.find({name: { $regex: regex, $options: 'i' }}, {limit: 5, projection: {_id: 0}}).toArray((err, customers: Person[]) => {
 		if (err) return console.log(err);
 		
 		res.send(customers);

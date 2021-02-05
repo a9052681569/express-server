@@ -2,6 +2,7 @@ import { RequestHandler, Router } from "express";
 import { ordersForActualShipment } from "./handlers/for/actual-shipment";
 import { ordersForPrepairing } from "./handlers/for/preparing";
 import { ordersByPersonId } from "./handlers/get-by-person-id";
+import { getCourierSheet } from "./handlers/get-courier-sheet";
 import { patchActualShipmentSended } from "./handlers/patch/actual-shipment-sended";
 import { patchOrder } from "./handlers/patch/patch";
 import { patchOrderSended } from "./handlers/patch/sended";
@@ -18,7 +19,8 @@ const handlers: RequestHandler[] = [
 	patchOrderSended,
 	patchOrderTrack,
 	removeOrder,
-	patchActualShipmentSended
+	patchActualShipmentSended,
+	getCourierSheet
 ]
 
 export const ordersRouter = Router().use('/orders', ...handlers);

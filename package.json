@@ -10,7 +10,7 @@
     "delete": "pm2 delete all",
     "check": "pm2 ls",
     "set": "ts-node set-orders-and-people.ts",
-    "addreminders": "ts-node add-reminders.ts",
+    "add-courier-track": "ts-node add-courier-track.ts",
     "mongo:backup": "ts-node ./mongo/scripts/make-backup.ts",
     "mongo:restore": "ts-node ./mongo/scripts/restore-db.ts",
     "reload": "sudo systemctl reload nginx && pm2 reload all"
@@ -24,11 +24,14 @@
     "compression": "1.7.4",
     "config": "3.3.3",
     "express": "4.17.1",
+    "json-as-xlsx": "1.1.8",
+    "json2xls": "0.1.2",
     "mongodb": "3.6.3",
     "pm2": "4.5.0",
     "ts-node": "9.0.0",
     "typescript": "4.1.2",
-    "uuid": "8.3.2"
+    "uuid": "8.3.2",
+    "xlsx": "0.16.9"
   },
   "devDependencies": {
     "@types/uuid": "8.3.0"
