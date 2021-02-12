@@ -18,14 +18,14 @@ getCourierSheet.post('/couriersheet', (req, res) => {
 	const cred: {
 		shipmentDate: string,
 		shipmentType: ShipmentTypes.courier,
-		sended?: boolean
+		sended?: {$in: [false, null]}
 	} = {
 		shipmentDate: date,
 		shipmentType: ShipmentTypes.courier
 	}
 
 	if (notSendedYet) {
-		cred.sended = false;
+		cred.sended = {$in: [false, null]};
 	}
 
 	const fileName = `${date}-courier-sheet.xlsx`;
