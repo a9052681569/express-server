@@ -48,8 +48,10 @@ ordersForActualShipment.post('/for/actual-shipment', (req, res) => {
 				if (person) {
 
 					const currentOrder: ActualShipmentOrder = getActualShipmentOrder(order, person);
-					const currentShipmentTypeState = acc.find(s => s.shipmentType === order.shipmentType);
 					const currentOrderType = getCurrentOrderType(order);
+					const currentShipmentTypeName: string = getCurrentShipmentTypeName(order.shipmentType, person.address?.city);
+
+					const currentShipmentTypeState = acc.find(s => s.shipmentType === currentShipmentTypeName);
 
 					if (currentShipmentTypeState) {
 
@@ -69,7 +71,7 @@ ordersForActualShipment.post('/for/actual-shipment', (req, res) => {
 
 					} else {
 						acc.push({
-							shipmentType: order.shipmentType,
+							shipmentType: currentShipmentTypeName,
 							ordersByType: [{
 								ordersType: currentOrderType,
 								orders: [currentOrder]
@@ -97,7 +99,8 @@ const getActualShipmentOrder = (order: Order, person: Person): ActualShipmentOrd
 		name: person.name,
 		address: person.address,
 		comment: order.comment,
-		sended: order.sended
+		sended: order.sended,
+		track: order.shipmentType === ShipmentTypes.courier ? order.trackNumber : ''
 	}
 }
 
@@ -127,4 +130,24 @@ const isEasyOrder = (order: Order): boolean => {
 
 const isTheatreOrder = (order: Order): boolean => {
 	return order.orderStructure.theatres.length && !order.orderStructure.kits.length
+}
+
+const getCurrentShipmentTypeName = (shipmentType: ShipmentTypes, city?: string): string => {
+
+	if (shipmentType === ShipmentTypes.courier) {
+		
+		if (city) {
+
+			if (city.toLowerCase().startsWith('с')) {
+				return 'курьер СПб';
+			}
+
+			if (city.toLowerCase().startsWith('м')) {
+				return 'курьер мск';
+			}
+		}
+
+	}
+
+	return shipmentType;
 }

@@ -3,7 +3,7 @@ import { OrderStructure } from './order';
 import { PersonAddress } from './person';
 
 export interface ASShipmentTypeState {
-	shipmentType: ShipmentTypes;
+	shipmentType: string;
 	ordersByType: ASOrderTypeState[];
 }
 
@@ -19,6 +19,7 @@ export interface ActualShipmentOrder {
 	address: PersonAddress;
 	orderId: string;
 	sended: boolean;
+	track: string;
 }
 
 export interface ASFilterFormData {
