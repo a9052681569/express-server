@@ -48,7 +48,7 @@ getCourierSheet.post('/couriersheet', (req, res) => {
 								'Город получателя': getCity(customer.address.city),
 								'Адрес получателя': customer.address.address,
 								'ФИО получателя': customer.name,
-								'Телефон получателя': customer.contacts.phone,
+								'Телефон получателя': customer.contacts.phone ? '8' + customer.contacts.phone : customer.contacts.phone,
 								'Кол-во мест': '1',
 								'Вес, кг': '1',
 								'Длина, см': '30',
