@@ -7,7 +7,7 @@ import { MONGO_URL } from "./mongo/config/url";
 import { appRouter } from "./router/router";
 import * as compression from 'compression';
 import { UserInCollection } from "./models/user";
-import { readFileSync } from "fs";
+import { join } from "path";
 
 const mongoClient = new MongoClient(MONGO_URL, MONGO_OPTIONS);
 const app = express();
@@ -16,6 +16,9 @@ const host = 'localhost';
 
 app.use(compression({level: 9}));
 app.use(express.static('front/natvorim-crm'));
+app.get('*', (req, res) => {
+	res.sendFile(join(__dirname + '/front/natvorim-crm/index.html'));
+});
 app.use(express.json());
 app.use(appRouter);
 
@@ -36,6 +39,8 @@ mongoClient.connect().then((client: MongoClient) => {
 
 });
 
-app.get(/backoffice/, (req, res) => {
-	res.redirect('/')
-});
+
+
+// app.get(/backoffice/, (req, res) => {
+// 	res.redirect('/')
+// });
